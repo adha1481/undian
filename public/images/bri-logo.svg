@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background BRI Blue -->
+  <rect width="120" height="40" rx="4" fill="#003d7a"/>
+
+  <!-- BRI Text -->
+  <text x="15" y="26" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">BRI</text>
+
+  <!-- Tagline -->
+  <text x="50" y="15" font-family="Arial, sans-serif" font-size="8" font-weight="normal" fill="#ffcc00">BANK</text>
+  <text x="50" y="25" font-family="Arial, sans-serif" font-size="8" font-weight="normal" fill="#ffcc00">RAKYAT</text>
+  <text x="50" y="35" font-family="Arial, sans-serif" font-size="8" font-weight="normal" fill="#ffcc00">INDONESIA</text>
+
+  <!-- Decorative element -->
+  <circle cx="105" cy="20" r="8" fill="#ff8c00"/>
+  <circle cx="105" cy="20" r="5" fill="white"/>
+</svg>
