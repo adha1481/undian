@@ -110,7 +110,7 @@
                 <div class="card-body">
                     <div class="row">
                         <!-- Super Admin & Admin Undian -->
-                        @if($user->hasAccess('undian'))
+                        @if(in_array($user->role, ['admin_undian', 'super_admin']))
                         <div class="col-lg-3 col-md-6 mb-3">
                             <a href="{{ route('lottery.index') }}" class="btn btn-outline-primary btn-lg w-100 h-100 d-flex flex-column justify-content-center">
                                 <i class="fas fa-dice fa-2x mb-2"></i>
@@ -120,7 +120,7 @@
                         @endif
 
                         <!-- Super Admin & Admin Peserta -->
-                        @if($user->hasAccess('peserta'))
+                        @if(in_array($user->role, ['admin_peserta', 'super_admin']))
                         <div class="col-lg-3 col-md-6 mb-3">
                             <a href="{{ route('participants.index') }}" class="btn btn-outline-success btn-lg w-100 h-100 d-flex flex-column justify-content-center">
                                 <i class="fas fa-user-friends fa-2x mb-2"></i>
@@ -130,7 +130,7 @@
                         @endif
 
                         <!-- Super Admin & Admin Hadiah -->
-                        @if($user->hasAccess('hadiah'))
+                        @if(in_array($user->role, ['admin_hadiah', 'super_admin']))
                         <div class="col-lg-3 col-md-6 mb-3">
                             <a href="{{ route('prizes.index') }}" class="btn btn-outline-warning btn-lg w-100 h-100 d-flex flex-column justify-content-center">
                                 <i class="fas fa-gift fa-2x mb-2"></i>
@@ -166,25 +166,25 @@
                         <div class="col-md-6">
                             <h6 class="text-primary">Role Anda: {{ $user->getRoleLabel() }}</h6>
                             <ul class="list-unstyled">
-                                @if($user->hasAccess('undian'))
+                                @if(in_array($user->role, ['admin_undian', 'super_admin']))
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success me-2"></i>
                                     Kelola Sistem Undian
                                 </li>
                                 @endif
-                                @if($user->hasAccess('peserta'))
+                                @if(in_array($user->role, ['admin_peserta', 'super_admin']))
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success me-2"></i>
                                     Kelola Data Peserta
                                 </li>
                                 @endif
-                                @if($user->hasAccess('hadiah'))
+                                @if(in_array($user->role, ['admin_hadiah', 'super_admin']))
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success me-2"></i>
                                     Kelola Data Hadiah
                                 </li>
                                 @endif
-                                @if($user->isSuperAdmin())
+                                @if($user->role === 'super_admin')
                                 <li class="mb-2">
                                     <i class="fas fa-check text-success me-2"></i>
                                     Akses Super Admin

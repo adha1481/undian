@@ -30,6 +30,17 @@ Route::middleware('guest')->group(function () {
 // Routes untuk pemenang - bisa diakses tanpa login
 Route::get('/lottery/winners', [LotteryController::class, 'winners'])->name('lottery.winners');
 
+// Route fallback untuk lottery - redirect ke winners untuk guest, ke admin lottery untuk admin
+Route::get('/lottery', function () {
+    if (auth()->check()) {
+        $user = auth()->user();
+        if ($user->role === 'admin_undian' || $user->role === 'super_admin') {
+            return redirect()->route('lottery.admin.index');
+        }
+    }
+    return redirect()->route('lottery.winners');
+})->name('lottery.index');
+
 // Redirect root ke dashboard jika sudah login, ke pemenang jika belum
 Route::get('/', function () {
     if (auth()->check()) {
@@ -75,19 +86,16 @@ Route::middleware('auth')->group(function () {
 
     // Routes untuk Admin Undian dan Super Admin
     Route::middleware('role:admin_undian,super_admin')->group(function () {
-        Route::prefix('lottery')->name('lottery.')->group(function () {
-            // Halaman utama undian
+        // Lottery admin routes dengan prefix
+        Route::prefix('lottery/admin')->name('lottery.admin.')->group(function () {
             Route::get('/', [LotteryController::class, 'index'])->name('index');
-
-            // API routes untuk undian
-            Route::get('/api/participants', [LotteryController::class, 'getParticipants'])->name('api.participants');
-            Route::get('/api/prizes', [LotteryController::class, 'getPrizes'])->name('api.prizes');
-            Route::post('/api/draw', [LotteryController::class, 'drawWinner'])->name('api.draw');
-            Route::post('/api/reset', [LotteryController::class, 'reset'])->name('api.reset');
+            Route::get('/participants', [LotteryController::class, 'getParticipants'])->name('participants');
+            Route::get('/prizes', [LotteryController::class, 'getPrizes'])->name('prizes');
+            Route::post('/draw', [LotteryController::class, 'drawWinner'])->name('draw');
+            Route::post('/reset', [LotteryController::class, 'reset'])->name('reset');
         });
 
-        // Lottery Routes (legacy - untuk compatibility)
-        Route::get('/lottery', [LotteryController::class, 'index']);
+        // Legacy lottery admin routes
         Route::get('/lottery/participants/{prize}', [LotteryController::class, 'getParticipantsByPrize']);
         Route::post('/lottery/draw', [LotteryController::class, 'drawWinner']);
         Route::post('/lottery/cancel-winner', [LotteryController::class, 'cancelWinner']);

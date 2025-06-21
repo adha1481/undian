@@ -276,7 +276,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-                        <a class="navbar-brand fw-bold" href="{{ route('lottery.index') }}">
+            <a class="navbar-brand fw-bold" href="{{ auth()->check() ? route('dashboard') : route('lottery.winners') }}">
                 <img src="{{ asset('images/bri-logo.svg') }}"
                      alt="BRI Logo" class="bri-logo">
                 Panen Hadiah Simpedes
@@ -290,7 +290,7 @@
                 <ul class="navbar-nav me-auto">
                     @auth
                         <!-- Menu untuk admin yang sudah login -->
-                        @if(auth()->user()->hasAccess('undian'))
+                        @if(in_array(auth()->user()->role, ['admin_undian', 'super_admin']))
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('lottery.*') && !request()->routeIs('lottery.winners') ? 'active fw-bold' : '' }}"
                                href="{{ route('lottery.index') }}">
@@ -299,7 +299,7 @@
                         </li>
                         @endif
 
-                        @if(auth()->user()->hasAccess('peserta'))
+                        @if(in_array(auth()->user()->role, ['admin_peserta', 'super_admin']))
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('participants.*') ? 'active fw-bold' : '' }}"
                                href="{{ route('participants.index') }}">
@@ -308,7 +308,7 @@
                         </li>
                         @endif
 
-                        @if(auth()->user()->hasAccess('hadiah'))
+                        @if(in_array(auth()->user()->role, ['admin_hadiah', 'super_admin']))
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('prizes.*') ? 'active fw-bold' : '' }}"
                                href="{{ route('prizes.index') }}">

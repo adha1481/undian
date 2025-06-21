@@ -43,7 +43,7 @@ class CheckRole
         }
 
         // Jika user tidak memiliki akses, redirect dengan pesan error
-        return redirect()->route('dashboard')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
+        return redirect()->route('lottery.index')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 
     /**
