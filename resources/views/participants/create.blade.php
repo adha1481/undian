@@ -46,13 +46,13 @@
                     <div class="mb-4">
                         <label for="address" class="form-label">
                             <i class="fas fa-map-marker-alt me-1"></i>
-                            Unit Lengkap <span class="text-danger">*</span>
+                            Nasabah Unit  <span class="text-danger">*</span>
                         </label>
                         <textarea class="form-control @error('address') is-invalid @enderror"
                                   id="address"
                                   name="address"
                                   rows="4"
-                                  placeholder="Masukkan Unit lengkap peserta"
+                                  placeholder="Masukkan BRI Unit Binaan"
                                   required>{{ old('address') }}</textarea>
                         @error('address')
                             <div class="invalid-feedback">

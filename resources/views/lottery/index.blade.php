@@ -27,13 +27,10 @@
                         <div>
                                 <h1 class="mb-0 fw-bold event-main-title">PANEN HADIAH</h1>
                                 <h2 class="mb-0 fw-bold text-warning">SIMPEDES</h2>
-                                <h4 class="mb-0 opacity-85">Periode Semester 1</h4>
+                                <h4 class="mb-0 opacity-85">Periode Semester 2 2024</h4>
                         </div>
                     </div>
-                        <div class="event-tagline">
-                            <p class="lead mb-0 fw-semibold">"Menabung Hari Ini, Beruntung Selamanya"</p>
-                            <small class="opacity-75">BRI Kantor Cabang Jalan Juanda, Jakarta Raya</small>
-                        </div>
+
                     </div>
                 </div>
             </div>

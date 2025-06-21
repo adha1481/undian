@@ -288,24 +288,44 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('lottery.*') ? 'active fw-bold' : '' }}"
-                           href="{{ route('lottery.index') }}">
-                            <i class="fas fa-dice me-1"></i>Undian
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('participants.*') ? 'active fw-bold' : '' }}"
-                           href="{{ route('participants.index') }}">
-                            <i class="fas fa-users me-1"></i>Peserta
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('prizes.*') ? 'active fw-bold' : '' }}"
-                           href="{{ route('prizes.index') }}">
-                            <i class="fas fa-trophy me-1"></i>Hadiah
-                        </a>
-                    </li>
+                    @auth
+                        <!-- Menu untuk admin yang sudah login -->
+                        @if(auth()->user()->hasAccess('undian'))
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('lottery.*') && !request()->routeIs('lottery.winners') ? 'active fw-bold' : '' }}"
+                               href="{{ route('lottery.index') }}">
+                                <i class="fas fa-dice me-1"></i>Undian
+                            </a>
+                        </li>
+                        @endif
+
+                        @if(auth()->user()->hasAccess('peserta'))
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('participants.*') ? 'active fw-bold' : '' }}"
+                               href="{{ route('participants.index') }}">
+                                <i class="fas fa-users me-1"></i>Peserta
+                            </a>
+                        </li>
+                        @endif
+
+                        @if(auth()->user()->hasAccess('hadiah'))
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('prizes.*') ? 'active fw-bold' : '' }}"
+                               href="{{ route('prizes.index') }}">
+                                <i class="fas fa-trophy me-1"></i>Hadiah
+                            </a>
+                        </li>
+                        @endif
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-bold' : '' }}"
+                               href="{{ route('dashboard') }}">
+                                <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                            </a>
+                        </li>
+                    @endauth
+
+                    <!-- Menu pemenang - selalu tersedia -->
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('lottery.winners') ? 'active fw-bold' : '' }}"
                            href="{{ route('lottery.winners') }}">
@@ -315,6 +335,43 @@
                 </ul>
 
                 <div class="d-flex align-items-center gap-3">
+                    @auth
+                        <!-- Menu admin yang sudah login -->
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle me-1"></i>
+                                <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><h6 class="dropdown-header">
+                                    <i class="fas fa-user-shield me-2"></i>{{ auth()->user()->getRoleLabel() }}
+                                </h6></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard') }}">
+                                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('profile') }}">
+                                    <i class="fas fa-user me-2"></i>Profil
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <!-- Tombol login untuk guest -->
+                        <a href="{{ route('login') }}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-sign-in-alt me-1"></i>
+                            <span class="d-none d-md-inline">Login Admin</span>
+                        </a>
+                    @endauth
+
                     <button class="btn btn-sm btn-outline-primary" onclick="toggleAudienceMode()" title="Mode Audiens - Sembunyikan Panel Kontrol">
                         <i class="fas fa-tv me-1"></i>
                         <span class="d-none d-md-inline">Mode Audiens</span>
@@ -337,7 +394,7 @@
                     🎯 PANEN HADIAH 🎁
                 </h1>
                 <h2 class="event-subtitle">Tabungan Simpedes</h2>
-                <p class="mb-2">Pengundian Hadiah Periode Semester 1</p>
+                <p class="mb-2">Pengundian Hadiah Periode Semester 2</p>
 
                 <div class="event-info">
                     <div class="row text-center">
